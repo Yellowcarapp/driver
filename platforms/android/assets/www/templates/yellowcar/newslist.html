@@ -1,0 +1,25 @@
+<ion-view view-title="{{language.news}}" cache-view="false"  >
+  <ion-content class="news_list padding">
+      
+ <ion-refresher  on-refresh="doRefresh()"> </ion-refresher>
+    <div
+        ng-click="godetails(item)"
+       collection-item-width="'100%'"
+       collection-item-height="90"> 
+      
+      <div class="row">
+        <div class="col col-25">
+         <img src="{{item.newsImage}}"/>
+        </div>
+        <div class="col col-75">
+         <h3 class="main_color">{{item.newsTitle}} </h3>
+         <p class="date">{{item.newsDate}} </p>
+         <p>{{item.newsAbout}}</p>
+        </div>
+      </div>
+     
+    </div>
+    <div class="imgNodata">  <img ng-if="news_list.length==0&&StopLoadMorenews" src="{{imgfolder}}no-data.png"/> </div>
+ <ion-infinite-scroll ng-if="!StopLoadMorenews" on-infinite="download_list()" distance="2%"></ion-infinite-scroll>
+  </ion-content>
+</ion-view  >

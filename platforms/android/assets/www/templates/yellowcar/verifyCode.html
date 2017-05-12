@@ -1,0 +1,31 @@
+<ion-view   hide-nav-bar="true">
+    <ion-content class="verify_code main_bg">
+        <img src="{{imgfolder}}lock.png" class="lock_img"/>
+
+        <form class="app_form" name="login_form">
+            <p class="code">{{language.msgverify}} <span class="tel_num"> +{{user_data.driverMobile}}</span></p>
+            <div class="list list-inset">
+
+                <label class="item item-input">
+                    <i class="icon ion-lock-combination"></i>
+                    <input type="tel" ng-model="formData.userVerifyCode" required placeholder="{{language.VerificationCode}}">
+                </label>
+                <div class="row two_btn">
+                  <div class="col col-50">
+                     <button ladda="loading" data-style="expand-left" ng-disabled="login_form.$invalid" ng-click="CheckActivationCode()" 
+                             class="button button-block  main_btn bg_color">{{language.bt_login}}</button>
+                   </div>
+                   <div class="col col-50">
+                     <a ng-click="changePhone()" class="button button-block main_btn sec_bg">{{language.changePhone}}</a>
+                   </div>
+                </div>
+
+               <button ng-click="sendverifyCode()" class="button button-block main_btn bg_color"  >
+                   {{language.resendVerificationCode}}
+               </button>
+           </div>
+       </form>
+
+    </ion-content>
+</ion-view>
+

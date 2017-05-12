@@ -1,0 +1,35 @@
+  <ion-modal-view class="payment_modal">
+    
+    <ion-header-bar class="bar bar-stable bg_color">
+        <h1 class="title">
+           {{language.Payment}}   
+        </h1>
+    </ion-header-bar>
+      
+    <ion-content class="pay_page">
+        <div class="row time_distance">
+           <div class="col">
+            <i class="sec_color ion-android-alarm-clock"></i>
+            <p>{{CurrentTripData.tripTime}} {{language.MIN }}</p>
+           </div>
+            <div class="col">
+             <i class="sec_color ion-location"></i>
+             <p ng-if="CurrentTripData.tripKm>0">{{CurrentTripData.tripKm}} {{language.KM}}</p>
+             <p ng-if="CurrentTripData.tripKm<=0">0 {{language.KM}}</p>
+           </div>
+        </div>
+        
+         <div class="cost">
+          <p> {{language.tripcost}}<span>{{CurrentTripData.tripCost}} {{language.RS }}</span></p>
+          <p ng-if="CurrentTripData.fineCancellation>0"> {{language.Fine_cancellation}}<span>{{CurrentTripData.fineCancellation}} {{language.RS }}</span></p>
+          <p ng-if="CurrentTripData.offerId>0">{{language.promocode}}<span>{{CurrentTripData.offerMaxValue}} {{language.RS}}</span></p>
+          <!--<p ng-if="CurrentTripData.offerId">{{language.Payment}}<span>{{(CurrentTripData.offerMaxValue >= CurrentTripData.tripCost)?'0':CurrentTripData.tripCost-CurrentTripData.offerMaxValue}} {{language.RS}}</span></p>-->
+          <p ng-if="CurrentTripData.fineCancellation>0 || CurrentTripData.offerId>0"> {{language.totalcost}}<span>{{CurrentTripData.totaltripCost}} {{language.RS}}</span></p>
+        </div>
+        
+        <p class="tit_pay sec_bg">{{language.chooseMethode }} {{language[CurrentTripData.payBy]}}</p>
+    </ion-content>
+    <ion-footer-bar class="footer_modal">
+        <a ng-click="closepayment();" class="button button-block main_btn bg_color close_pay"> {{language.Close }}</a>
+    </ion-footer-bar>
+    </ion-modal-view>

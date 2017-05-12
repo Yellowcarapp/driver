@@ -1,0 +1,62 @@
+<ion-modal-view>
+    <ion-header-bar class="bar-stable bg_color" >
+        <h1 class="title"> {{language.balance}}</h1>
+        <button class="button button-icon button-clear ion-navicon open_menu" ng-click="openmenumodal()"></button>
+    </ion-header-bar>  
+    <div ng-show="showdiv_menu" compile="div_menu"></div>
+
+    <ion-content class="padding balance" ng-controller="balanceCtrl"  ng-click="closemenumodal('disablemap')">
+     
+        <div class="trip_balance trip_price"> 
+            <div class="data_trip">
+                <p> {{language.TripsCount}}<span class="main_color">{{user_data.TripsCount}} </span></p>
+                <p> {{language.totalcost}}<span class="main_color">{{user_data.TripsCost}} {{language.RS}}</span></p>
+                <p> {{language.Commission}}<span class="main_color">{{user_data.TripsFees}}  {{language.RS}}</span></p>
+                <h3> {{language.balance}}<span class="main_color">{{user_data.driverCredit}}  {{language.RS}}</span></h3>
+            </div>
+            <button  ng-click="Popup_addcard()"class="button button-block bg_color main_btn">{{language.Charge}}</button>
+        </div>
+        <!--<div class="balance_driver">
+            <p class="head balance_label">{{language.balance}}</p>
+            <button  ng-click="Popup_addcard()"class="button button-default">{{language.Charge}}</button>
+            <h3 class="total_cost">{{sumaccounts.sum}} {{language.RS}}</h3>
+        </div>
+        <div class="balance_driver">
+            <p class="head last_statement">{{language.Laststatment}}</p>
+            <div class="cost_grid">
+                <div class="row">
+                    <div class="col col-33">
+                        <p>  {{language.DateTime}}</p>
+                    </div>
+                    <div class="col">
+                        <p>{{language.reason}}</p>
+                    </div>
+                    <div class="col">
+                        <p>{{language.Debit1}}</p>
+                    </div>
+                    <div class="col">
+                        <p>{{language.credit1}}</p>
+                    </div>
+                </div>
+                <div class="row"  ng-repeat="item in List" >
+                    <div class="col col-33">
+                        <p>{{ReturnLocalTime(item.acc_date) }}</p>
+                    </div>
+                    <div class="col"> 
+                        <p ng-if="lng=='ur'"> {{item.acc_com_txt_en}} </p>
+                        <p ng-if="lng!='ur'"> {{item['acc_com_txt_'+lng]}} </p>
+                    </div>
+                    <div class="col">
+                        <p>{{item.debit}}</p>
+                    </div>
+                    <div class="col">
+                        <p>{{item.credit}}</p>
+                    </div>
+                </div>
+                <button ng-if="!hideBtn"class="button button-block main_btn bg_color" ng-click="LoadData()">
+                    {{language.Viewmore}}
+                </button>
+            </div>
+        </div>-->
+    </ion-content>
+</ion-modal-view>

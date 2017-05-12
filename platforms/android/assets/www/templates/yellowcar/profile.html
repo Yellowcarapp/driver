@@ -1,0 +1,282 @@
+<ion-modal-view ng-controller="RegisterCtrl">
+    <ion-header-bar class="bar-stable bg_color" >
+        <h1 class="title"> {{language.Profile}}</h1>
+        <button class="button button-icon button-clear ion-navicon open_menu" ng-click="openmenumodal()"></button>
+    </ion-header-bar>  
+    <div ng-show="showdiv_menu" compile="div_menu"></div>
+    <div class="bar bar-subheader sub_head profile_head"  ng-click="closemenumodal('disablemap')">
+        <div class="profil_img main_color">
+            <img ng-if="formData.driverImage&&formData.driverImage!=''" ng-click="getPhoto('driverImage')" class="cir_img" ng-src="{{path_img}}{{formData.driverImage}}"/>
+            <img ng-if="!formData.driverImage||formData.driverImage==''"  ng-click="getPhoto('driverImage')" class="cir_img" ng-src="{{imgfolder}}profile_img.png"/>
+            <h3 >{{user_data.driverFName}} {{user_data.driverLName}}</h3>
+            <p class="change_password"  ng-click="closemodal_page();openPage_modal('changePassword');">  {{language.changePass}}</p>   
+        </div>   
+        <div class="row two_tabs">
+            <div class="col" ng-click="changeDataShow(1)" ng-class="{'border_color color_tab':driver_data==1}">
+                <p class="main_color">{{language.PersonalData}}</p>
+            </div>
+            <div class="col" ng-click="changeDataShow(2,regForm1.$invalid)" ng-class="{'border_color color_tab':driver_data==2}">
+                <p class="main_color"> {{language.CarSpecifications}}</p>
+            </div>
+        </div>
+    </div>
+    <ion-content class="profile_page"   ng-click="closemenumodal('disablemap')">
+        <div class="app_form">
+            <div  ng-show="driver_data==1">
+                <form name="regForm1" id="regForm1">
+                    <div class="row">
+                        <div class="col">
+                            <span>{{language.FirstName}}</span>
+                            <label class="item item-input" 
+                                ng-style="{'border':(regForm1.driverFName.$invalid && regForm1.driverFName.$dirty)?'1px solid red':'1px solid #ccc'}">
+                                <input type="text" ng-model="formData.driverFName"  pattern=".{3,}" name="driverFName" required placeholder="{{language.FirstName}}"  >
+                            </label>
+                        </div>
+                        <div class="col">
+                            <span>{{language.LastName}}</span>
+                            <label class="item item-input"
+                                ng-style="{'border':(regForm1.driverLName.$invalid && regForm1.driverLName.$dirty)?'1px solid red':'1px solid #ccc'}">
+                                <input focus type="text" ng-model="formData.driverLName"  pattern=".{3,}" name="driverLName" required placeholder="{{language.LastName}}" >
+                            </label>
+                        </div>
+                        <div class="col col-10">
+                            <i class="ion-checkmark-circled" ng-style="{'color':(regForm1.driverFName.$valid && regForm1.driverLName.$valid)?'#dea930':''}"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span>{{language.email}}</span>
+                            <label class="item item-input"
+                                ng-style="{'border':(regForm1.driverEmail.$invalid && regForm1.driverEmail.$dirty)?'1px solid red':'1px solid #ccc'}">
+                                <input focus type="email" ng-model="formData.driverEmail"  required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" name="driverEmail"
+                                placeholder="{{language.email}}" >
+                            </label>
+                        </div>
+                        <div  class="col col-10">
+                            <i class="ion-checkmark-circled" ng-style="{'color':(regForm1.driverEmail.$valid)?'#dea930':''}"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span>{{language.NationalIDRs}}</span>
+                            <label class="item item-input" 
+                                ng-style="{'border':(regForm1.driverIdnumber.$invalid && regForm1.driverIdnumber.$dirty)?'1px solid red':'1px solid #ccc'}">
+                            <input focus type="tel" ng-model="formData.driverIdnumber"  required  name="driverIdnumber" maxlength="{{Config.IDlength}}"   minlength="{{Config.IDlength}}"  
+                                placeholder="{{language.NationalIDRs}}" >
+                            </label>
+                        </div>
+                        <div class="col col-10">
+                            <i class="ion-checkmark-circled" ng-style="{'color':(regForm1.driverIdnumber.$valid)?'#dea930':''}"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col ">
+                            <span>{{language.day}} </span>
+                            <label class="item item-input item-select sel_inp" >
+                                <select  ng-model="driverbirth.day" required >
+                                    <option  value="{{item}}" ng-selected="item==driverbirth.day" ng-repeat="item in days">  {{item}}
+                                    </option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="col ">
+                            <span>{{language.month}} </span>
+                            <label class="item item-input item-select sel_inp">
+                                <select   ng-model="driverbirth.month" required >
+                                    <option  value="{{item}}" ng-selected="item==driverbirth.month" ng-repeat="item in months">{{item}}</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div class="col">
+                            <span>{{language.year}}</span>
+                            <label class="item item-input item-select sel_inp">
+                                <select  ng-model="driverbirth.Year" required ng-options="item as item for item in Years"></select>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span>{{language.licenseNumber}} </span>
+                            <label class="item item-input"
+                                ng-style="{'border':(regForm1.licenseNumber.$invalid && regForm1.licenseNumber.$dirty)?'1px solid red':'1px solid #ccc'}">
+                                <input type="tel"  focus ng-model="formData.licenseNumber" pattern=".{4,}" name="licenseNumber" placeholder="{{language.licenseNumber}}" required> 
+                            </label>
+                        </div>
+                        <div class="col col-10">
+                            <i class="ion-checkmark-circled" ng-style="{'color':(regForm1.licenseNumber.$valid)?'#dea930':''}"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col ">
+                            <span>{{language.Country}}</span>
+                            <label class="item item-input item-select sel_inp">
+                                <select  ng-model="formData.driverCountryId" ng-change="chooseCountry()" required 
+                                    ng-options="item.countryId as item['countryName_'+lng] for item in countries track by $index ">
+                                </select>
+                            </label>
+                        </div>
+                        <div class="col ">
+                            <span>{{language.city}}</span>
+                            <label class="item item-input item-select sel_inp">
+                                <select  ng-model="formData.driverCityId"  required  
+                                    ng-options="item.cityId as item['cityName_'+lng] for item in cities|filter:{countryId:formData.driverCountryId} ">
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row mobile_number">
+                        <div class="col">
+                            <span>{{language.Mobile}} </span>    
+                            <label class="item item-input"
+                                ng-style="{'border':(regForm1.driverMobile.$invalid && regForm1.driverMobile.$dirty)?'1px solid red':'1px solid #ccc'}">
+                                <input maxlength="{{Config.mobilelength}}"  type="tel"  ng-pattern="Config.pattern_mobilelength" ng-model="formData.driverMobile" name="driverMobile" >
+                              
+                            </label>
+                        </div>
+                        <div class="col col-10">
+                            <i class="ion-checkmark-circled" ng-style="{'color':(regForm1.driverMobile.$valid)?'#dea930':''}"></i>
+                        </div>
+                    </div>
+                    <div class="radio_style row sel_gender">
+                        <div class="col" ng-click="formData.driverGender=1"  >
+                            <input focus type="radio" value="1" ng-model="formData.driverGender" id="radio1" name="radio" checked>
+                            <label for="radio1"><span></span></label> {{language.male}}
+                        </div>
+                        <div class="col"  ng-click="formData.driverGender=0">
+                            <input  type="radio" value="0" ng-model="formData.driverGender" id="radio2" name="radio">
+                            <label for="radio2"><span></span></label> {{language.female}}		
+                        </div>
+                    </div>
+                    <div class="padding prof_btn">
+                        <button   ng-click="changeDataShow(2)" ng-disabled="regForm1.$invalid "
+                        class="button button-block main_btn bg_color"> {{language.Next}}</button>
+                    </div> 
+                </form>
+            </div>
+            <div class="reg_data" ng-show="driver_data==2">
+                <form name="regForm2" id="regForm2">
+                    <div class="row">
+                        <div class="col">
+                            <span> {{language.brand}}</span>
+                            <label class="item item-input item-select sel_inp">
+                                <select  ng-model="formData.brandId"  required 
+                                    ng-options="item.brandId as item['brandName_'+lng] for item in brandsList ">
+                                </select>
+                            </label>
+                        </div>
+                        <div class="col">
+                            <span> {{language.Model}} </span>
+                            <label class="item item-input item-select sel_inp">
+                                <select  ng-model="formData.modelId"  required 
+                                    ng-options="item.modelId as item['modelTitle_'+lng] for item in modelsList|filter:{brandId:formData.brandId} ">
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span>{{language.year}} </span>
+                            <label class="item item-input item-select sel_inp">
+                                <select ng-model="formData.carYear"  required   ng-options="item as item for item in carYear"> </select>
+                            </label>
+                        </div>
+                        <div class="col">
+                            <span> {{language.level}} </span>
+                            <label class="item item-input item-select sel_inp">
+                                <select ng-model="formData.levelId"  required ng-options="item.levelId as item['levelName_'+lng] for item in levelsList "></select>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span> {{language.Seats}}</span>
+                            <label class="item item-input item-select sel_inp">
+                                <select ng-model="formData.seatNo" required  ng-options="item for item in seat"></select>
+                            </label>
+                        </div>
+                        <div class="col">
+                            <span> {{language.network}}</span>
+                            <label class="item item-input item-select sel_inp">
+                                <select ng-model="formData.networkId"  required 
+                                ng-options="item.network_id as item.network_name for item in networkList|filter:{network_country:formData.driverCountryId} "></select>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span> {{language.carNumber}}</span>
+                            <label class="item item-input "
+                                ng-style="{'border':(regForm2.carNumber.$invalid && regForm2.carNumber.$dirty)?'1px solid red':'1px solid #ccc'}">
+                                <input focus type="tel" name="carNumber" ng-model="formData.carNumber" placeholder="{{language.carNumber}}" required maxlength="6">
+                            </label>
+                        </div>
+                        <div class="col">
+                            <span>&nbsp;</span>
+                            <label class="item item-input"
+                                ng-style="{'border':(regForm2.carNumber2.$invalid && regForm2.carNumber2.$dirty)?'1px solid red':'1px solid #ccc'}">
+                                <input  focus type="text"  name="carNumber2" ng-model="formData.carNumber2"  placeholder="{{language.carNumber2}}"
+                                ng-required="Config.LicensesLetters==1" maxlength="5"  > 
+                            </label>
+                        </div>  
+                        <div class="col col-10">
+                            <i class="ion-checkmark-circled" 
+                                ng-style="{'color':(regForm2.carNumber.$valid && regForm2.carNumber2.$valid)?'#dea930':''}"></i>
+                        </div>
+                    </div>
+
+          <div class="row">
+            <div class="col">
+                <span>{{language.carColor}}</span>
+                <label class="item item-input"  ng-style="{'border':(regForm2.carColor.$invalid && regForm2.carColor.$dirty)?'1px solid red':'1px solid #ccc'}">
+                    <input focus type="text" ng-model="formData.carColor"  required  name="carColor"  placeholder="{{language.carColor}}" >
+                </label>
+            </div>
+             <div class="col col-10">
+                <i class="ion-checkmark-circled" ng-style="{'color':(regForm2.carColor.$valid)?'#dea930':''}"></i>
+            </div>
+        </div>
+
+         <div class="photos">
+            <span> {{language.Uploadcarphotos}}</span>
+            <div  class="car_photo" ng-click="getPhoto('carFrontPhoto')" ng-if="show_list_uploadImg(2)" >
+                <div class="img_car">
+                    <i ng-if="!formData.carFrontPhoto&&formData.carFrontPhoto!=imgfolder+'Loading-1.gif'" class="ion-plus"></i>
+                    <img ng-if="formData.carFrontPhoto&&formData.carFrontPhoto!=imgfolder+'Loading-1.gif'" ng-src="{{path_img}}{{formData.carFrontPhoto}}"/>
+                    <img ng-if="formData.carFrontPhoto&&formData.carFrontPhoto==imgfolder+'Loading-1.gif'" ng-src="{{imgfolder+'Loading-1.gif'}}"/>
+                </div>
+                <p> {{language.carFrontPhoto}}</p>
+            </div>
+                <div class="car_photo" ng-click="getPhoto('carBackPhoto')" ng-if="show_list_uploadImg(3)" >
+                <div class="img_car">
+                    <i ng-if="!formData.carBackPhoto&&formData.carBackPhoto!=imgfolder+'Loading-1.gif'" class="ion-plus"></i>
+                    <img ng-if="formData.carBackPhoto&&formData.carBackPhoto!=imgfolder+'Loading-1.gif'" ng-src="{{path_img}}{{formData.carBackPhoto}}"/>
+                    <img ng-if="formData.carBackPhoto&&formData.carBackPhoto==imgfolder+'Loading-1.gif'" ng-src="{{imgfolder+'Loading-1.gif'}}"/>
+                </div>
+                <p> {{language.carBackPhoto}}</p>
+            </div>
+                <div  class="car_photo" ng-click="getPhoto('licensePhoto')" ng-if="show_list_uploadImg(4)">
+                <div class="img_car">
+                    <i ng-if="!formData.licensePhoto&&formData.licensePhoto!=imgfolder+'Loading-1.gif'" class="ion-plus"></i>
+                    <img ng-if="formData.licensePhoto&&formData.licensePhoto!=imgfolder+'Loading-1.gif'" ng-src="{{path_img}}{{formData.licensePhoto}}"/>
+                    <img ng-if="formData.licensePhoto&&formData.licensePhoto==imgfolder+'Loading-1.gif'"  ng-src="{{imgfolder+'Loading-1.gif'}}"/>
+                </div>
+                <p> {{language.licensePhoto}}</p>
+            </div>
+            <div class="car_photo" ng-if="show_list_uploadImg(5)" ng-click="getPhoto('driverIDphoto')">
+                <div class="img_car"  >
+                    <i ng-if="!formData.driverIDphoto&&formData.driverIDphoto!=imgfolder+'Loading-1.gif'" class="ion-plus"></i>
+                    <img ng-if="formData.driverIDphoto&&formData.driverIDphoto!=imgfolder+'Loading-1.gif'" ng-src="{{path_img}}{{formData.driverIDphoto}}"/>
+                    <img ng-if="formData.driverIDphoto&&formData.driverIDphoto==imgfolder+'Loading-1.gif'" ng-src="{{imgfolder+'Loading-1.gif'}}"/>
+                </div>
+                <p> {{language.driverIDphotoRS}}</p>
+            </div>
+        </div>  
+                    <a ng-click="register()" ng-disabled="regForm2.$invalid"  
+                        class="button button-block main_btn bg_color"> {{language.Save}} 
+                    </a>
+                </form>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,31 @@
+<ion-side-menus enable-menu-with-back-views="true">
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-stable main_head bg_color">
+        
+        <ion-nav-back-button class="button-icon back_btn" ng-click="GoToHome()">
+            <i ng-if="lng!='en'" class="ion-chevron-left"></i>
+            <i  ng-if="lng=='en'"class="ion-chevron-right"></i>
+        </ion-nav-back-button>
+
+      <ion-nav-buttons side="left" id="MenuButton">
+        <button ng-if="lng=='en'" style="display:block"  class="button button-icon button-clear ion-navicon" ng-click="openmenumodal()">
+        </button>
+           <ion-toggle ng-disabled="disable_driverAvailable" ng-if="lng!='en' && showToggelav" ng-model="menuData.driverAvailable"  ng-change="ChangeStatus()">
+          </ion-toggle>
+        <button ng-if="lng=='en' && showToggelav"  class="button button-icon sec_bg call_btn" ng-click="Call(Config.CallCenter)">
+           <i class="ion-ios-telephone"></i>
+        </button>
+      </ion-nav-buttons>
+        <ion-nav-buttons side="right" id="MenuButton">
+        <button ng-if="lng!='en'" style="display:block" class="button button-icon button-clear ion-navicon" ng-click="openmenumodal()">
+        </button>
+       <ion-toggle ng-disabled="disable_driverAvailable" ng-if="lng=='en' && showToggelav" ng-model="menuData.driverAvailable" ng-change="ChangeStatus()">
+         </ion-toggle>
+        <button ng-if="lng!='en' && showToggelav"  class="button button-icon sec_bg call_btn" ng-click="Call(Config.CallCenter)">
+           <i class="ion-ios-telephone"></i>
+        </button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+</ion-side-menus>

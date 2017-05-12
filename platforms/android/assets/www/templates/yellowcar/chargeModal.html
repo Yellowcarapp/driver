@@ -1,0 +1,11 @@
+<ion-modal-view >
+    <ion-content  scroll="false" class="padding">
+       <div class="app_form">
+                <span>{{language.cardNo}}</span>
+                <label class="item item-input">
+                    <input type="text" ng-model="formData.cardNumber"  placeholder="{{language.cardNo}}"  >
+                </label>
+        </div>
+    <a ng-click="addcard()" ng-disabled="formData.cardNumber.length==0"  class="button button-block main_btn bg_color"> {{language.Save}} </a>
+    </ion-content>
+</ion-modal-view>

@@ -1,0 +1,39 @@
+  <ion-content class="login_page main_bg">
+
+        <h3 class="main_color">{{language.startnow}}</h3>
+   <p>{{language.freelogin}}</p>
+
+    <form class="app_form" name="login_form"> 
+        <div class="list list-inset">
+            <label class="item item-input item-select sel_inp">
+                <select ng-model="lng" ng-change="change_lng(lng)">
+                    <option  value="en" ng-selected="lng=='en'"> {{language.english}}</option>
+                    <option  value="ar" ng-selected="lng=='ar'"> {{language.arabic}}</option>
+                    <option  value="ur" ng-selected="lng=='ur'"> {{language.urdu}}</option>
+
+                </select>
+            </label>
+            <label class="item item-input">
+                <i class="icon ion-android-person"></i>
+                
+                <input type="tel"  maxlength="{{Config.mobilelength}}" placeholder="{{language.Mobile}}" ng-model="formData.driverMobile" required  >
+            </label>
+             <label class="item item-input">
+                <i class="icon icon ion-lock-combination"></i>
+                <input type="password" placeholder="{{language.pass}}" ng-model="formData.driverPass" required >
+            </label>
+            <div class="row two_btn">
+               <div class="col">
+                 <button ladda="loading" data-style="expand-left" ng-disabled="login_form.$invalid" ng-click="LogIn()" 
+                         class="button button-block main_btn sec_bg">{{language.bt_login}}</button>
+               </div>
+               <div class="col"  ng-if="Config && Config.DriverRegister==1">
+                 <a href="#/app/register" class="button button-block main_btn bg_color">{{language.new_user}}</a>
+               </div>
+            </div>
+           
+            <p ng-click="changepassword()" class="forget_psw">{{language.forgetPassword}}</p>
+        </div>
+    </form>
+  </ion-content>
+

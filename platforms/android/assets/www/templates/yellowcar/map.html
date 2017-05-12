@@ -1,0 +1,99 @@
+<ion-view view-title="" cache-view="false" > 
+  <div ng-show="showdiv_menu" compile="div_menu"></div>
+  <ion-content class="map_page" scroll="false" ng-click="closemenumodal()">
+        <div id="map_canvas" ng-style="{'height':height}" >
+            <!--<img ng-if="!tripId" class="pin_img" ng-src="{{imgfolder}}pin.png" width="20" height="40" id="PinItem"/>-->
+            <img  ng-src="{{imgfolder}}mylocation.png" class="mylocation" id="MyLocation"/>
+            </div>
+        </div>
+
+         <div class="content_modal height_full" id="requestdiv" ng-show="show_requestdiv" >
+            <p class="title_req"  ng-click="change_heightDiv('requestdiv')" >
+            {{language.NEWREQUEST }} <span class="counter">{{Waiting}}  </span>
+            </p>
+            <div class="request_head"  ng-click="change_heightDiv('requestdiv')">
+                <h3>{{CurrentTripData.passengerName}}<i ng-if="!height_request" class="ion-chevron-down"></i>
+                <i ng-if="height_request" class="ion-chevron-up"></i></h3>
+                <p class="from_to"><i class="ion-record from_place"></i>{{CurrentTripData.tripFromAddress}}</p>
+                <p class="from_to"><i class="ion-record"></i>{{(CurrentTripData.tripToAdress=='DESTINATION')?language.Destination:CurrentTripData.tripToAdress}} </p>
+                <p class="to_place" ng-show="CurrentTripData.offerId">{{language.ThrowOffer}}{{CurrentTripData.offerMaxValue}} {{language.RS }} </p>
+            </div>
+            <div class="row time_distance"  ng-click="change_heightDiv('requestdiv')">
+                <div class="col">
+                    <i class="ion-android-alarm-clock"></i>
+                    <p>{{TimeToCome.time}} </p>
+                </div>
+                <div class="col">
+                    <i class="ion-location"></i>
+                    <p>{{TimeToCome.distance}} </p>
+                </div>
+            </div>
+            <div class="row two_btn">
+                <div class="col">
+                      <a ng-disabled="disable_UpdateRequest" ng-click="UpdateRequest(true,{tripStatus:3},0)" class="button button-block main_btn bg_color">
+                    {{language.Acceptrequest}}
+                </a>
+                </div>
+                <div class="col">
+                  <a  ng-click="closerequest(true);"  class="button button-block main_btn sec_bg">{{language.ignore}}</a>
+                </div>
+            </div>
+        </div>
+      
+      <div class="detail_request" id="detail_requestdiv" ng-show="show_detail_requestdiv"  ng-class="{'height_full':height_request}">
+       <div class="request_head" ng-click="change_heightDiv('detail_requestdiv')">
+         <div class="row first_row">
+          <div class="col col-50">
+             <h3>{{CurrentTripData.passengerName}}</h3>
+          </div>
+           <div class="col" ng-hide="CurrentTripData.tripStatus==4 || (CurrentTripData.tripStatus==5 && !CurrentTripData.tripTo)">
+              <span><i class="ion-location"></i>&nbsp;{{TimeToCome.distance}}</span>
+          </div>
+           <div class="col" ng-hide="CurrentTripData.tripStatus==4 || (CurrentTripData.tripStatus==5 && !CurrentTripData.tripTo)">
+             <span><i class="ion-android-alarm-clock">&nbsp;</i>{{TimeToCome.time}}</span>
+          </div>
+         </div>
+         <p class="from_to"><i class="ion-record from_place"></i>{{CurrentTripData.tripFromAddress}}  </p>
+         <p class="from_to"><i class="ion-record"></i>{{(CurrentTripData.tripToAdress=='DESTINATION')?language.Destination:CurrentTripData.tripToAdress}}</p>
+         <p ng-show="CurrentTripData.offerId">{{language.ThrowOffer}}{{CurrentTripData.offerMaxValue}} {{language.RS }} </p>
+       </div>
+       <div class="row more_btn" >
+         <div class="col col-50" ng-show="CurrentTripData.tripStatus==3">
+           <button class="button button-block modal_btn" ng-disabled="disable_UpdateRequest"  ng-click="UpdateRequest(false,{tripStatus:4})">
+             {{language.Arrive}} <img src="{{imgfolder}}pin2.png"/>
+           </button>
+         </div>
+         <div class="col col-25" ng-show="CurrentTripData.tripStatus==4" ng-class="{'col col-50':user_data.driverCancelTrip==0}">
+           <button class="button button-block modal_btn" ng-disabled="disable_UpdateRequest"  ng-click="UpdateRequest(false,{tripStatus:5})">
+              {{language.PickUp}}
+           </button>
+        </div>
+        <div class="col col-25" ng-show="CurrentTripData.tripStatus==4 && user_data.driverCancelTrip==1">
+           <button class="button button-block modal_btn sec_bg"  ng-click="openignor_request()">
+               {{language.cancel}}
+           </button>
+        </div>
+        <div class="col col-50" ng-show="CurrentTripData.tripStatus==5">
+           <button class="button button-block modal_btn" ng-disabled="disable_UpdateRequest"  ng-click="UpdateRequest(false,{tripStatus:6})">
+              {{language.DropOff}} <img src="{{imgfolder}}pin2.png"/>
+           </button>
+         </div>
+           <div class="col" ng-click="openalarm_request()" ng-show="CurrentTripData.tripStatus==4" >
+           <button class="button button-icon">
+             <i class="ion-android-alarm-clock"></i>
+           </button>
+         </div>
+          <div class="col" ng-click="GoToMap()">
+           <button class="button button-icon locat_icon">
+             <i class="ion-map"></i>
+           </button>
+         </div>
+          <div class="col" ng-hide="CurrentTripData.tripStatus==5" ng-click="Call('00'+CurrentTripData.passengerMobile)">
+           <button class="button button-icon call_icon">
+             <i class="ion-ios-telephone"></i>
+           </button>
+         </div>
+       </div>
+    </div>
+  </ion-content>
+</ion-view>
